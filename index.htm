@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="fr"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Christine Trescartes - Étalonneuse Coloriste</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #ffffff;
+            color: #2c2c2c;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #7dd3c0 0%, #a8e6cf 100%);
+            padding: 4rem 2rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header .subtitle {
+            font-size: 1.5rem;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            font-weight: 300;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .header .tagline {
+            font-size: 1.1rem;
+            color: #f0f0f0;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.8;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-bar {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            text-align: center;
+            margin-top: 2rem;
+            border-radius: 10px;
+            display: inline-block;
+        }
+
+        .contact-bar a {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 1.5rem;
+            transition: color 0.3s;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .contact-bar a:hover {
+            color: #e0e0e0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #1a1a1a;
+            position: relative;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid #1a1a1a;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .skill-card {
+            background: #f8f8f8;
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .skill-card h3 {
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .skill-card ul {
+            list-style: none;
+        }
+
+        .skill-card li {
+            padding: 0.3rem 0;
+            color: #4a4a4a;
+        }
+
+        .skill-card li::before {
+            content: '▹ ';
+            color: #1a1a1a;
+            font-weight: bold;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: #ffffff;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .project-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .project-image-placeholder {
+            color: #999;
+            font-size: 3rem;
+        }
+
+        .add-image-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(26, 26, 26, 0.8);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+            z-index: 10; /* Assurez-vous qu'il est au-dessus de l'image */
+        }
+
+        .add-image-btn:hover {
+            background: rgba(26, 26, 26, 1);
+        }
+
+        .project-title {
+            color: #1a1a1a;
+            font-size: 1.2rem;
+            font-weight: 600;
+            padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+        }
+
+        .project-body {
+            padding: 0 1.5rem 1.5rem 1.5rem;
+        }
+
+        .project-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-tag {
+            background: #1a1a1a;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .project-client {
+            color: #666;
+            font-size: 0.95rem;
+            margin-top: 0.5rem;
+        }
+
+        .series-section {
+            background: #f8f8f8;
+            padding: 2rem;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+            margin-top: 2rem;
+        }
+
+        .series-title {
+            color: #1a1a1a;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .series-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .series-item {
+            background: #ffffff;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid #1a1a1a;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .series-item h4 {
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
+        }
+
+        .series-item p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .footer {
+            background: linear-gradient(135deg, #7dd3c0 0%, #a8e6cf 100%);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .footer p {
+            color: #ffffff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .modal-header {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+
+        .modal input {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        .modal-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .modal-btn-primary {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        .modal-btn-primary:hover {
+            background: #3a3a3a;
+        }
+
+        .modal-btn-secondary {
+            background: #e0e0e0;
+            color: #1a1a1a;
+        }
+
+        .modal-btn-secondary:hover {
+            background: #d0d0d0;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .header .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-bar a {
+                display: block;
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>CHRISTINE TRESCARTES</h1>
+        <div class="subtitle">Étalonneuse - Coloriste</div>
+        <div class="tagline">
+            20 ans d'expérience dans l'étalonnage de documentaires et séries pour les grandes chaînes françaises
+        </div>
+        <div class="contact-bar">
+            <a href="mailto:christres@hotmail.fr">✉ christres@hotmail.fr</a>
+            <a href="tel:0612415673">📞 06 12 41 56 73</a>
+            <a>📍 Le Perreux-sur-Marne, Île-de-France</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <section class="section">
+            <h2 class="section-title">Compétences</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3>Post-production</h3>
+                    <ul>
+                        <li>DaVinci Resolve (certifiée)</li>
+                        <li>Avid Ultimate</li>
+                        <li>Premiere Pro</li>
+                        <li>After Effects</li>
+                        <li>Photoshop</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <h3>Spécialisations</h3>
+                    <ul>
+                        <li>Étalonnage UHD/4K</li>
+                        <li>Étalonnage HDR</li>
+                        <li>Documentaires</li>
+                        <li>Séries télévisées</li>
+                        <li>Fusion pour étalonneurs</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <h3>Équipement</h3>
+                    <ul>
+                        <li>Station complète d'étalonnage pro</li>
+                        <li>Drone 4K</li>
+                        <li>Télépilote certifié</li>
+                        <li>Chef monteuse</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Projets Récents 2024-2025</h2>
+            <div class="projects-grid" id="projectsGrid"><div class="project-card">
+                    <div class="project-image">
+                        <img src="blob:null/17c10a15-c457-4319-bc00-a6c195a360f8" alt="Anatomie d'un come back">
+                        <button class="add-image-btn" onclick="openModal('anatomie')">
+                            ✏️ Modifier
+                        </button>
+                    </div>
+                    <div class="project-title">Anatomie d'un come back</div>
+                    <div class="project-body">
+                        <div class="project-info">
+                            <span class="project-tag">UHD</span><span class="project-tag">Prime Video</span><span class="project-tag">2025</span>
+                        </div>
+                        <div class="project-client">Breath Film</div>
+                    </div>
+                </div><div class="project-card">
+                    <div class="project-image">
+                        <img src="blob:null/9f33249f-d04d-4af2-b403-16bedb42de16" alt="Fragments de guerre">
+                        <button class="add-image-btn" onclick="openModal('fragments')">
+                            ✏️ Modifier
+                        </button>
+                    </div>
+                    <div class="project-title">Fragments de guerre</div>
+                    <div class="project-body">
+                        <div class="project-info">
+                            <span class="project-tag">Documentaire</span><span class="project-tag">2025</span>
+                        </div>
+                        <div class="project-client">Solène Chalvon Fioriti, Elephant Groupe</div>
+                    </div>
+                </div><div class="project-card">
+                    <div class="project-image">
+                        <img src="blob:null/1c7dd11e-3203-4bc4-878f-db9921f29e8f" alt="Santé mentale : briser le tabou">
+                        <button class="add-image-btn" onclick="openModal('sante')">
+                            ✏️ Modifier
+                        </button>
+                    </div>
+                    <div class="project-title">Santé mentale : briser le tabou</div>
+                    <div class="project-body">
+                        <div class="project-info">
+                            <span class="project-tag">Documentaire</span><span class="project-tag">2025</span>
+                        </div>
+                        <div class="project-client">Juliette Paquin et Peggy Olmi, Ever Prod</div>
+                    </div>
+                </div><div class="project-card">
+                    <div class="project-image">
+                        <img src="blob:null/876cc2ee-6fc5-4734-96e9-9c171f04a77c" alt="L'enfant et la lame">
+                        <button class="add-image-btn" onclick="openModal('enfant')">
+                            ✏️ Modifier
+                        </button>
+                    </div>
+                    <div class="project-title">L'enfant et la lame</div>
+                    <div class="project-body">
+                        <div class="project-info">
+                            <span class="project-tag">L'Équipe TV</span><span class="project-tag">2025</span>
+                        </div>
+                        <div class="project-client">Christine Thomas, L'Équipe TV Productions</div>
+                    </div>
+                </div><div class="project-card">
+                    <div class="project-image">
+                        <img src="blob:null/c067e869-c3f6-4dc3-ae71-fac9011a5c07" alt="Crash, peloton sous tension">
+                        <button class="add-image-btn" onclick="openModal('crash')">
+                            ✏️ Modifier
+                        </button>
+                    </div>
+                    <div class="project-title">Crash, peloton sous tension</div>
+                    <div class="project-body">
+                        <div class="project-info">
+                            <span class="project-tag">L'Équipe TV</span><span class="project-tag">2025</span>
+                        </div>
+                        <div class="project-client">Fabien Douillard, L'Équipe TV Productions</div>
+                    </div>
+                </div><div class="project-card">
+                    <div class="project-image">
+                        <img src="blob:null/1daeb203-b785-47f7-b285-a0293818351b" alt="Le club des sans club, un été pour signer">
+                        <button class="add-image-btn" onclick="openModal('club')">
+                            ✏️ Modifier
+                        </button>
+                    </div>
+                    <div class="project-title">Le club des sans club, un été pour signer</div>
+                    <div class="project-body">
+                        <div class="project-info">
+                            <span class="project-tag">L'Équipe TV</span><span class="project-tag">2025</span>
+                        </div>
+                        <div class="project-client">Charlie Courrent, L'Équipe TV Productions</div>
+                    </div>
+                </div><div class="project-card">
+                    <div class="project-image">
+                        <img src="blob:null/18514981-d6be-47b4-ab13-1748bbffc5e3" alt="Ai Weiwei, l'art de la dissidence">
+                        <button class="add-image-btn" onclick="openModal('aiweiwei')">
+                            ✏️ Modifier
+                        </button>
+                    </div>
+                    <div class="project-title">Ai Weiwei, l'art de la dissidence</div>
+                    <div class="project-body">
+                        <div class="project-info">
+                            <span class="project-tag">Documentaire</span><span class="project-tag">2024</span>
+                        </div>
+                        <div class="project-client">Caroline Benarrosh, Cat et Comp</div>
+                    </div>
+                </div><div class="project-card">
+                    <div class="project-image">
+                        <img src="blob:null/f8c4d22d-b9b9-4a76-bc99-d0b342896463" alt="L'Histoire au scalpel : Napoléon à Sainte-Hélène">
+                        <button class="add-image-btn" onclick="openModal('napoleon')">
+                            ✏️ Modifier
+                        </button>
+                    </div>
+                    <div class="project-title">L'Histoire au scalpel : Napoléon à Sainte-Hélène</div>
+                    <div class="project-body">
+                        <div class="project-info">
+                            <span class="project-tag">Documentaire</span><span class="project-tag">2024</span>
+                        </div>
+                        <div class="project-client">Philippe Charlier, Capa</div>
+                    </div>
+                </div><div class="project-card">
+                    <div class="project-image">
+                        <img src="blob:null/4994d0de-e7ff-4291-a439-5cbf65e2e225" alt="Kadhafi, la folie d'un dictateur">
+                        <button class="add-image-btn" onclick="openModal('kadhafi')">
+                            ✏️ Modifier
+                        </button>
+                    </div>
+                    <div class="project-title">Kadhafi, la folie d'un dictateur</div>
+                    <div class="project-body">
+                        <div class="project-info">
+                            <span class="project-tag">Le Monde en face</span><span class="project-tag">2025</span>
+                        </div>
+                        <div class="project-client">Kamal Redouani, Elephant Group</div>
+                    </div>
+                </div><div class="project-card">
+                    <div class="project-image">
+                        <img src="blob:null/1ab33184-7cdf-4310-89c6-8a4590ee223d" alt="Quand la mémoire vacille">
+                        <button class="add-image-btn" onclick="openModal('memoire')">
+                            ✏️ Modifier
+                        </button>
+                    </div>
+                    <div class="project-title">Quand la mémoire vacille</div>
+                    <div class="project-body">
+                        <div class="project-info">
+                            <span class="project-tag">Documentaire</span><span class="project-tag">2024</span>
+                        </div>
+                        <div class="project-client">Olivier Delacroix, France.tv Studio</div>
+                    </div>
+                </div><div class="project-card">
+                    <div class="project-image">
+                        <img src="blob:null/a902b3f4-5a64-4349-8772-7c42556489ab" alt="1 Tonne 5">
+                        <button class="add-image-btn" onclick="openModal('tonne')">
+                            ✏️ Modifier
+                        </button>
+                    </div>
+                    <div class="project-title">1 Tonne 5</div>
+                    <div class="project-body">
+                        <div class="project-info">
+                            <span class="project-tag">Série 4×52'</span><span class="project-tag">UHD</span><span class="project-tag">Canal+</span>
+                        </div>
+                        <div class="project-client">Cat et Comp (2023)</div>
+                    </div>
+                </div><div class="project-card">
+                    <div class="project-image">
+                        <img src="blob:null/0a95dc52-f03b-48e1-a688-34bd798770e2" alt="À la recherche de la jeunesse éternelle">
+                        <button class="add-image-btn" onclick="openModal('jeunesse')">
+                            ✏️ Modifier
+                        </button>
+                    </div>
+                    <div class="project-title">À la recherche de la jeunesse éternelle</div>
+                    <div class="project-body">
+                        <div class="project-info">
+                            <span class="project-tag">UHD</span><span class="project-tag">M6</span><span class="project-tag">2024</span>
+                        </div>
+                        <div class="project-client">Cat et Comp</div>
+                    </div>
+                </div><div class="project-card">
+                    <div class="project-image">
+                        <img src="blob:null/bcf659ca-a3e4-4441-aff6-c202bf2e75a7" alt="Les secrets de la Tour Eiffel">
+                        <button class="add-image-btn" onclick="openModal('eiffel')">
+                            ✏️ Modifier
+                        </button>
+                    </div>
+                    <div class="project-title">Les secrets de la Tour Eiffel</div>
+                    <div class="project-body">
+                        <div class="project-info">
+                            <span class="project-tag">120'</span><span class="project-tag">2023</span>
+                        </div>
+                        <div class="project-client">Terminal 9</div>
+                    </div>
+                </div><div class="project-card">
+                    <div class="project-image">
+                        <img src="blob:null/073b5be4-3ee7-45bc-87bd-61ed96de8670" alt="Louis XIV, portrait d'un roi bâtisseur">
+                        <button class="add-image-btn" onclick="openModal('louis')">
+                            ✏️ Modifier
+                        </button>
+                    </div>
+                    <div class="project-title">Louis XIV, portrait d'un roi bâtisseur</div>
+                    <div class="project-body">
+                        <div class="project-info">
+                            <span class="project-tag">70'</span><span class="project-tag">2024</span>
+                        </div>
+                        <div class="project-client">ITV Studios</div>
+                    </div>
+                </div><div class="project-card">
+                    <div class="project-image">
+                        <img src="blob:null/214e06c0-1bd9-4a00-ab10-9e3f6cae46ec" alt="Je ne suis pas chinetoque">
+                        <button class="add-image-btn" onclick="openModal('chinetoque')">
+                            ✏️ Modifier
+                        </button>
+                    </div>
+                    <div class="project-title">Je ne suis pas chinetoque</div>
+                    <div class="project-body">
+                        <div class="project-info">
+                            <span class="project-tag">Documentaire</span><span class="project-tag">2024</span>
+                        </div>
+                        <div class="project-client">Jessica Bagic, Troisième Œil Productions</div>
+                    </div>
+                </div><div class="project-card">
+                    <div class="project-image">
+                        <img src="blob:null/a4de8e3a-c867-4aeb-a9ff-5c62aeb1d936" alt="Ukraine - Sur les traces des bourreaux">
+                        <button class="add-image-btn" onclick="openModal('ukraine')">
+                            ✏️ Modifier
+                        </button>
+                    </div>
+                    <div class="project-title">Ukraine - Sur les traces des bourreaux</div>
+                    <div class="project-body">
+                        <div class="project-info">
+                            <span class="project-tag">Documentaire</span><span class="project-tag">2024</span>
+                        </div>
+                        <div class="project-client">Ksenia Bolchakova, Manon Loizeau, Capa</div>
+                    </div>
+                </div></div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Collaborations Régulières</h2>
+            <div class="series-section">
+                <div class="series-title">Séries documentaires en cours</div>
+                <div class="series-list">
+                    <div class="series-item">
+                        <h4>Complément d'enquête</h4>
+                        <p>Cat et Comp · Depuis 2023</p>
+                    </div>
+                    <div class="series-item">
+                        <h4>Le Monde de Jamy</h4>
+                        <p>Elephant Groupe · Depuis 2023</p>
+                    </div>
+                    <div class="series-item">
+                        <h4>Enquête Exclusive</h4>
+                        <p>Cat et Comp · Depuis 2022</p>
+                    </div>
+                    <div class="series-item">
+                        <h4>Au bout de l'enquête</h4>
+                        <p>France 2, Lazare Prod · Depuis 2022</p>
+                    </div>
+                    <div class="series-item">
+                        <h4>Sur le front avec Hugo Clément</h4>
+                        <p>Winter Prod pour France 5 · Depuis 2020</p>
+                    </div>
+                    <div class="series-item">
+                        <h4>TF1 Reportages</h4>
+                        <p>TF1 Prod · Depuis 2019</p>
+                    </div>
+                    <div class="series-item">
+                        <h4>Docs de France 5</h4>
+                        <p>Itw Studio · Depuis 2019</p>
+                    </div>
+                    <div class="series-item">
+                        <h4>Documentaires Canal+</h4>
+                        <p>Canal+ Productions · Depuis 2019</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Formation</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3>Certifications</h3>
+                    <ul>
+                        <li>Certification DaVinci Resolve</li>
+                        <li>Étalonnage HDR (Fink Formation)</li>
+                        <li>Fusion pour étalonneurs</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <h3>Formation initiale</h3>
+                    <ul>
+                        <li>BTS Audiovisuel</li>
+                        <li>Spécialisation Montage</li>
+                        <li>Lycée de l'Image et du Son, Angoulême</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="footer">
+        <p>© 2025 Christine Trescartes - Étalonneuse Coloriste | Disponible en télétravail et présentiel (France entière)</p>
+    </div>
+
+    <div id="imageModal" class="modal">
+        <div class="modal-content">
+            <h3 class="modal-header">Ajouter une image au projet</h3>
+            
+            <input type="file" id="imageFileInput" accept="image/*" style="margin-bottom: 1rem;">
+            
+            <p style="text-align: center; color: #666; margin-bottom: 1rem;">ou</p>
+            
+            <input type="text" id="imageUrlInput" placeholder="Coller une URL d'image (ex: http://...)">
+            
+            <div class="modal-buttons">
+                <button class="modal-btn modal-btn-secondary" onclick="closeModal()">Annuler</button>
+                <button class="modal-btn modal-btn-primary" onclick="saveImage()">Enregistrer</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const projects = [
+            { id: 'anatomie', title: 'Anatomie d\'un come back', tags: ['UHD', 'Prime Video', '2025'], client: 'Breath Film', image: null },
+            { id: 'fragments', title: 'Fragments de guerre', tags: ['Documentaire', '2025'], client: 'Solène Chalvon Fioriti, Elephant Groupe', image: null },
+            { id: 'sante', title: 'Santé mentale : briser le tabou', tags: ['Documentaire', '2025'], client: 'Juliette Paquin et Peggy Olmi, Ever Prod', image: null },
+            { id: 'enfant', title: 'L\'enfant et la lame', tags: ['L\'Équipe TV', '2025'], client: 'Christine Thomas, L\'Équipe TV Productions', image: null },
+            { id: 'crash', title: 'Crash, peloton sous tension', tags: ['L\'Équipe TV', '2025'], client: 'Fabien Douillard, L\'Équipe TV Productions', image: null },
+            { id: 'club', title: 'Le club des sans club, un été pour signer', tags: ['L\'Équipe TV', '2025'], client: 'Charlie Courrent, L\'Équipe TV Productions', image: null },
+            { id: 'aiweiwei', title: 'Ai Weiwei, l\'art de la dissidence', tags: ['Documentaire', '2024'], client: 'Caroline Benarrosh, Cat et Comp', image: null },
+            { id: 'napoleon', title: 'L\'Histoire au scalpel : Napoléon à Sainte-Hélène', tags: ['Documentaire', '2024'], client: 'Philippe Charlier, Capa', image: null },
+            { id: 'kadhafi', title: 'Kadhafi, la folie d\'un dictateur', tags: ['Le Monde en face', '2025'], client: 'Kamal Redouani, Elephant Group', image: null },
+            { id: 'memoire', title: 'Quand la mémoire vacille', tags: ['Documentaire', '2024'], client: 'Olivier Delacroix, France.tv Studio', image: null },
+            { id: 'tonne', title: '1 Tonne 5', tags: ['Série 4×52\'', 'UHD', 'Canal+'], client: 'Cat et Comp (2023)', image: null },
+            { id: 'jeunesse', title: 'À la recherche de la jeunesse éternelle', tags: ['UHD', 'M6', '2024'], client: 'Cat et Comp', image: null },
+            { id: 'eiffel', title: 'Les secrets de la Tour Eiffel', tags: ['120\'', '2023'], client: 'Terminal 9', image: null },
+            { id: 'louis', title: 'Louis XIV, portrait d\'un roi bâtisseur', tags: ['70\'', '2024'], client: 'ITV Studios', image: null },
+            { id: 'chinetoque', title: 'Je ne suis pas chinetoque', tags: ['Documentaire', '2024'], client: 'Jessica Bagic, Troisième Œil Productions', image: null },
+            { id: 'ukraine', title: 'Ukraine - Sur les traces des bourreaux', tags: ['Documentaire', '2024'], client: 'Ksenia Bolchakova, Manon Loizeau, Capa', image: null },
+            { id: 'familles', title: 'Familles d\'ici', tags: ['Série 8x52\'', 'Documentaire', '2025'], client: 'Eden Productions', image: null }
+];
+
+        let currentProjectId = null;
+        // Tente de charger les images sauvegardées, sinon utilise un objet vide
+        const savedImages = JSON.parse(localStorage.getItem('portfolioImages')) || {};
+
+        function saveImagesToLocalStorage() {
+            localStorage.setItem('portfolioImages', JSON.stringify(savedImages));
+        }
+
+        function renderProjects() {
+            const grid = document.getElementById('projectsGrid');
+            grid.innerHTML = '';
+
+            projects.forEach(project => {
+                // Utilise l'URL sauvegardée ou la valeur par défaut (null)
+                const imageUrl = savedImages[project.id] || project.image;
+                
+                const card = document.createElement('div');
+                card.className = 'project-card';
+                card.innerHTML = `
+                    <div class="project-image">
+                        ${imageUrl ? 
+                            // Si une URL existe, affiche l'image
+                            `<img src="${imageUrl}" alt="${project.title}">` : 
+                            // Sinon, affiche le placeholder
+                            '<span class="project-image-placeholder">🎬</span>'
+                        }
+                        <button class="add-image-btn" onclick="openModal('${project.id}')">
+                            ${imageUrl ? '✏️ Modifier' : '➕ Ajouter'}
+                        </button>
+                    </div>
+                    <div class="project-title">${project.title}</div>
+                    <div class="project-body">
+                        <div class="project-info">
+                            ${project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('')}
+                        </div>
+                        <div class="project-client">${project.client}</div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function openModal(projectId) {
+            currentProjectId = projectId;
+            const modal = document.getElementById('imageModal');
+            const urlInput = document.getElementById('imageUrlInput');
+            const fileInput = document.getElementById('imageFileInput');
+
+            // Pré-remplit le champ URL si l'image est une URL externe (pas un blob)
+            urlInput.value = savedImages[projectId] && !savedImages[projectId].startsWith('blob:') ? savedImages[projectId] : '';
+            fileInput.value = ''; // Réinitialiser le champ de fichier
+            
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('active');
+            currentProjectId = null;
+        }
+
+        function saveImage() {
+            const urlInput = document.getElementById('imageUrlInput');
+            const fileInput = document.getElementById('imageFileInput');
+            const url = urlInput.value.trim();
+            const file = fileInput.files[0];
+            let finalUrl = null;
+            
+            if (currentProjectId) {
+                if (file) {
+                    // Si un fichier local est choisi, crée une URL temporaire (blob)
+                    finalUrl = URL.createObjectURL(file);
+                } else if (url) {
+                    // Si un fichier n'est pas choisi, utilise l'URL collée
+                    finalUrl = url;
+                }
+
+                if (finalUrl) {
+                    // Libérer la mémoire du blob précédent si nécessaire
+                    if (savedImages[currentProjectId] && savedImages[currentProjectId].startsWith('blob:')) {
+                        URL.revokeObjectURL(savedImages[currentProjectId]);
+                    }
+                    
+                    savedImages[currentProjectId] = finalUrl;
+                    saveImagesToLocalStorage(); // Sauvegarder pour persister au rafraîchissement
+                    renderProjects();
+                    closeModal();
+                } else {
+                    alert("Veuillez choisir un fichier sur votre ordinateur ou entrer une URL.");
+                }
+            }
+        }
+
+        // Fermer la modale en cliquant à l'extérieur
+        document.getElementById('imageModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Rendu initial des projets au chargement de la page
+        renderProjects();
+    </script>
+
+</body></html>
